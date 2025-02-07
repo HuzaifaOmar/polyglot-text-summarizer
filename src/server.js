@@ -1,7 +1,7 @@
 const express = require("express");
 const app = express();
 const cors = require("cors");
-app.use(cors()); // Enable CORS for all routes
+app.use(cors());
 app.use(express.json());
 const { metacall_load_from_file, metacall } = require("metacall");
 const path = require("path");
@@ -18,13 +18,12 @@ const load = new Promise((resolve, reject) => {
   }
 });
 
-// Start the server
 const start = () => {
   app.use(express.json());
 
   app.post("/summarize", async (req, res) => {
     try {
-      console.log("Received request body:", req.body); // Debugging line
+      console.log("Received request body:", req.body); //  line
       const { text } = req.body;
       if (!text) {
         return res.status(400).send("Text is required.");
@@ -46,14 +45,12 @@ const start = () => {
 module.exports = (() => {
   let server = null;
 
-  // Load script and start the server
   load
     .then(() => {
       server = start();
     })
     .catch(console.error);
 
-  // Export a close function to gracefully exit from the server
   return {
     close: () => {
       console.log("Closing server...");
