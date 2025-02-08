@@ -8,6 +8,8 @@ We'll build a text summarization application that:
 2. Exposes the functionality via a Node.js backend
 3. Integrates both using MetaCall's polyglot capabilities
 
+![UI](./media/UI.png)
+![summarized text](./media/summarized-example.png)
 ### Installation
 
 1. **Install MetaCall**
