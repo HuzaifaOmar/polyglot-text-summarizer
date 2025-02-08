@@ -1,7 +1,7 @@
 import google.generativeai as genai
 
 # Initialize Gemini AI
-genai.configure(api_key="AIzaSyBB2nprFLa3GHdvzcf-Q_71Nvu3euDbM8U")
+genai.configure(api_key="<YOUR-API-KEY>")
 model = genai.GenerativeModel("gemini-pro")
 
 def summarize(text: str) -> str:
