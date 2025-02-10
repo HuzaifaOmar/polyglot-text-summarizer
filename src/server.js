@@ -16,7 +16,6 @@ const start = () => {
       if (!text) {
         return res.status(400).send("Text is required.");
       }
-
       const summary = await summarize(text);
       res.json({ summary });
     } catch (error) {

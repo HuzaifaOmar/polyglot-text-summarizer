@@ -47,28 +47,21 @@ def summarize(text: str) -> str:
     return response.text
 ```
 
+**Note on Implementation:**
+This implementation uses the Gemini API as a quick and easy way to demonstrate text summarization. However, in a production or ideal scenario, you would likely want to run your own language model (e.g., fine-tuned GPT, LLaMA, or another open-source model) locally or on your own infrastructure. MetaCall's polyglot capabilities make it seamless to integrate such models written in Python with other components of your stack (e.g., Node.js, C++, etc.).
+
+For example, you could replace the Gemini API call with a local model inference using libraries like `transformers` from Hugging Face. MetaCall would still handle the integration between your Python-based model and the Node.js backend effortlessly.
+
 ### Nodejs Server (src/server.js)
 
 ```javascript
+const { summarize } = require("./src/summarizer.py");
 const express = require("express");
 const app = express();
 const cors = require("cors");
 app.use(cors());
 app.use(express.json());
-const { metacall_load_from_file, metacall } = require("metacall");
 const path = require("path");
-
-// Initialize the Python script
-const load = new Promise((resolve, reject) => {
-  try {
-     const scriptPath = path.join(__dirname, "summarizer.py");
-     console.log("Loading...", scriptPath);
-     metacall_load_from_file("py", [scriptPath]);
-     resolve();
-  } catch (ex) {
-    reject(ex);
-  }
-});
 
 const start = () => {
   app.use(express.json());
@@ -81,7 +74,7 @@ const start = () => {
         return res.status(400).send("Text is required.");
       }
 
-      const summary = await metacall("summarize", text);
+      const summary = await summarize(text);
       res.json({ summary });
     } catch (error) {
       console.error("Error calling Python function:", error);
@@ -95,13 +88,7 @@ const start = () => {
 };
 
 module.exports = (() => {
-  let server = null;
-
-  load
-    .then(() => {
-      server = start();
-    })
-    .catch(console.error);
+  let server = start();
 
   return {
     close: () => {
@@ -110,7 +97,21 @@ module.exports = (() => {
     },
   };
 })();
+```
 
+**Note on Import Path:**
+The import statement `require('./src/summarizer.py')` specifies the path relative to the **MetaCall CLI's working directory**, not the location of the JavaScript file. This is because the MetaCall CLI is invoked from the base repository directory (`./`), and it resolves paths relative to that directory
+
+If you prefer to use `require('./summarizer.py')` instead, you would need to run the MetaCall CLI from the `./src` directory. For example:
+
+```bash
+cd src
+metacall
+```
+
+```bash
+Welcome to Tijuana, tequila, sexo & marijuana.
+λ load node ./server.js
 ```
 
 ### Setup & Execution
