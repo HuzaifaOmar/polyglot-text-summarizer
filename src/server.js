@@ -1,22 +1,10 @@
+const { summarize } = require("./src/summarizer.py");
 const express = require("express");
 const app = express();
 const cors = require("cors");
 app.use(cors());
 app.use(express.json());
-const { metacall_load_from_file, metacall } = require("metacall");
 const path = require("path");
-
-// Initialize the Python script
-const load = new Promise((resolve, reject) => {
-  try {
-     const scriptPath = path.join(__dirname, "summarizer.py");
-     console.log("Loading...", scriptPath);
-     metacall_load_from_file("py", [scriptPath]);
-     resolve();
-  } catch (ex) {
-    reject(ex);
-  }
-});
 
 const start = () => {
   app.use(express.json());
@@ -29,7 +17,7 @@ const start = () => {
         return res.status(400).send("Text is required.");
       }
 
-      const summary = await metacall("summarize", text);
+      const summary = await summarize(text);
       res.json({ summary });
     } catch (error) {
       console.error("Error calling Python function:", error);
@@ -43,13 +31,7 @@ const start = () => {
 };
 
 module.exports = (() => {
-  let server = null;
-
-  load
-    .then(() => {
-      server = start();
-    })
-    .catch(console.error);
+  let server = start();
 
   return {
     close: () => {
