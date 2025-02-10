@@ -132,7 +132,8 @@ Welcome to Tijuana, tequila, sexo & marijuana.
 3. **Load Application**
 
     ```bash
-    load node ./src/server.js
+    Welcome to Tijuana, tequila, sexo & marijuana.
+    λ load node ./src/server.js
     ```
 
 4. **Run Frontend** (in separate terminal)
