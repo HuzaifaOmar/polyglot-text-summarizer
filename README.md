@@ -106,12 +106,7 @@ If you prefer to use `require('./summarizer.py')` instead, you would need to run
 
 ```bash
 cd src
-metacall
-```
-
-```bash
-Welcome to Tijuana, tequila, sexo & marijuana.
-λ load node ./server.js
+metacall server.js
 ```
 
 ### Setup & Execution
@@ -126,14 +121,8 @@ Welcome to Tijuana, tequila, sexo & marijuana.
 2. **Start MetaCall CLI**
 
     ```bash
-    metacall
-    ```
-
-3. **Load Application**
-
-    ```bash
-    Welcome to Tijuana, tequila, sexo & marijuana.
-    λ load node ./src/server.js
+    cd src
+    metacall server.js
     ```
 
 4. **Run Frontend** (in separate terminal)
