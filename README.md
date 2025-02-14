@@ -122,7 +122,7 @@ metacall server.js
 
     ```bash
     cd src
-    metacall server.js
+    metacall ./src/server.js
     ```
 
 4. **Run Frontend** (in separate terminal)
