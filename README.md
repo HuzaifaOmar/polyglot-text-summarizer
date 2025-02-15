@@ -106,7 +106,7 @@ If you prefer to use `require('./summarizer.py')` instead, you would need to run
 
 ```bash
 cd src
-metacall server.js
+metacall node server.js
 ```
 
 ### Setup & Execution
@@ -122,7 +122,7 @@ metacall server.js
 
     ```bash
     cd src
-    metacall ./src/server.js
+    metacall node ./src/server.js
     ```
 
 4. **Run Frontend** (in separate terminal)
